@@ -1,31 +1,45 @@
 import './App.css'
 import responseMTG from './mocks/with_results.json';
+import { searchCards } from './services/cards';
+import { useEffect, useState } from 'react';
+import { Cards } from './components/Cards';
+
 
 function App() {
-const cards = responseMTG.cards
-const hasCards = cards?.lenght > 0
+const [search, updateSearh] = useState('')
+const [cards, setCards] = useState([])
+//const cards = responseMTG.cards
+const hasCards = cards?.length > 0
+
+useEffect(()=>{
+  async function fetchCards(){
+    const cardsResponse = await searchCards(search)
+    setCards(cardsResponse)
+  }
+  fetchCards()
+})
+const handleSubmit = (event) => {
+  //evita comportamiento por defecto
+  event.preventDefault()
+
+}
+const handleChange = (event) => {
+  const newSearch = event.target.value
+  updateSearh(newSearch)
+  console.log(newSearch)
+}
   return (
     <>
     <header>
       <h1>Buscador MTG</h1>
-      <form>
-        <input></input>
+      <form onSubmit={handleSubmit}>
+        <input name='query' onChange={handleChange} value={search}></input>
         <button type='submit'>Buscar</button>
       </form>
     </header>
 
     <main>
-      {
-      
-          <ul>
-            {cards.map(card =>(
-              <li key={card.id}>
-                <h3>{card.name}</h3>
-                <img src={card.imageUrl}/>
-              </li>
-            ))}
-          </ul>
-      }
+      <Cards cards={cards}></Cards>
     </main>
     </>
   )
