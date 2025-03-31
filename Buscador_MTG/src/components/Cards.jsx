@@ -6,9 +6,9 @@ export function Cards({cards}){
     }
     console.log(cards)
     return(
-        <ul>
+        <ul className="cards">
             {cards.map(card =>(
-            <li key={card.id}>
+            <li className="card" key={card.id}>
                 <h3>{card.title}</h3>
                 <img src={card.image} alt={card.title}/>
             </li>

@@ -29,7 +29,7 @@ const handleChange = (event) => {
   console.log(newSearch)
 }
   return (
-    <>
+    <div className='mainPage'>
     <header>
       <h1>Buscador MTG</h1>
       <form onSubmit={handleSubmit}>
@@ -41,7 +41,7 @@ const handleChange = (event) => {
     <main>
       <Cards cards={cards}></Cards>
     </main>
-    </>
+    </div>
   )
 }
 
